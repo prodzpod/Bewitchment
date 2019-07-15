@@ -96,7 +96,7 @@ public class EntityOwl extends EntityMultiSkin implements IAnimatedEntity {
 		this.tasks.addTask(5, new EntityAIWander(this, 0.5D));
 		this.tasks.addTask(3, new EntityAIMate(this, 0.8d));
 		this.tasks.addTask(4, this.aiSit);
-		this.targetTasks.addTask(4, new EntityAITargetNonTamed<EntityLivingBase>(this, EntityLivingBase.class, false, e -> e instanceof EntityRabbit || e instanceof EntityBat || e instanceof EntityChicken || e instanceof EntityParrot || e instanceof EntityBlindworm || e instanceof EntityLizard));
+		this.targetTasks.addTask(4, new EntityAITargetNonTamed<EntityLivingBase>(this, EntityLivingBase.class, false, e -> e instanceof EntityRabbit || e instanceof EntityBat || e instanceof EntityChicken || e instanceof EntityParrot || e instanceof EntityBlindworm || e instanceof EntityLizard || e.getClass().getName().equals("seraphaestus.historicizedmedicine.Mob.Rat.EntityRat") || e.getClass().getName().equals("com.github.alexthe666.rats.server.entity.EntityRat")));
 		this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, true));
 		this.tasks.addTask(4, new EntityAIFollowParent(this, 0.5D));
 		this.targetTasks.addTask(1, new EntityAIOwnerHurtByTarget(this));

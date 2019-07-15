@@ -14,7 +14,7 @@ public class PotionAddersKiss extends GenericBrewDamageVS {
 
 	@Override
 	protected boolean shouldAffect(EntityLivingBase entity) {
-		return entity instanceof EntityRabbit || entity instanceof EntityChicken || entity instanceof EntityBlindworm || entity instanceof EntityLizard || entity.getClass().getName().equals("seraphaestus.historicizedmedicine.Mob.Rat.EntityRat");
+		return entity instanceof EntityRabbit || entity instanceof EntityChicken || entity instanceof EntityBlindworm || entity instanceof EntityLizard || entity.getClass().getName().equals("seraphaestus.historicizedmedicine.Mob.Rat.EntityRat") || entity.getClass().getName().equals("com.github.alexthe666.rats.server.entity.EntityRat");
 	}
 
 	@Override

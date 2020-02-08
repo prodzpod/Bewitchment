@@ -132,6 +132,7 @@ public class EntityRaven extends ModEntityTameable {
 		super.onLivingUpdate();
 		if (this.getHealth() < this.getMaxHealth() && !(ticksExisted % 200 > 5)) {
 			this.heal(2);
+		}
 			if (!onGround && motionY <= 0) motionY *= 0.6;
 			if (shearTimer > 0) shearTimer--;
 			
@@ -145,7 +146,6 @@ public class EntityRaven extends ModEntityTameable {
 				this.setPeckTime(this.getNewPeck());
 			}
 		}
-	}
 	
 	public int getPeckTime() {
 		return this.dataManager.get(PECK_TIME).intValue();

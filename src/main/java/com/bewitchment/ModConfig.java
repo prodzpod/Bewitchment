@@ -43,6 +43,10 @@ public class ModConfig {
 		@Config.Comment("The maximum power a Grimoire Magia can have.")
 		@Config.RangeInt(min = 0)
 		public int maxGrimoirePower = 1000;
+
+		@Config.Comment("The times the Skeleton Key may be used before breaking.")
+		@Config.RangeInt(min = 0, max = 128)
+		public int maxSkeletonKeyUses = 10;
 	}
 	
 	public static class WorldGen {

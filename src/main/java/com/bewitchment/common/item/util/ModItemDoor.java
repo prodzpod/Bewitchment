@@ -71,15 +71,7 @@ public class ModItemDoor extends ItemDoor {
 		@Override
 		public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing face, float hitX, float hitY, float hitZ) {
 			if (this == ModObjects.juniper_door.door) {
-				boolean found = false;
-				for (ItemStack stack : Bewitchment.proxy.getEntireInventory(player)) {
-					if (ItemJuniperKey.canAccess(world, pos, world.provider.getDimension(), stack)) {
-						found = true;
-						break;
-					}
-				}
-				if (!found) {
-					if (!world.isRemote) player.sendStatusMessage(new TextComponentTranslation("juniper_key.invalid"), true);
+				if (!ItemJuniperKey.checkAccess(world, pos, player, true)) {
 					return true;
 				}
 			}
@@ -172,7 +164,7 @@ public class ModItemDoor extends ItemDoor {
 		public float getPlayerRelativeBlockHardness(IBlockState state, EntityPlayer player, World world, BlockPos pos) {
 			float val = super.getPlayerRelativeBlockHardness(state, player, world, pos);
 			if (this == ModObjects.juniper_door.door) {
-				for (ItemStack stack : Bewitchment.proxy.getEntireInventory(player)) if (ItemJuniperKey.canAccess(world, pos, player.dimension, stack)) return val;
+				if (ItemJuniperKey.checkAccess(world, pos, player, false)) return val;
 				return -1;
 			}
 			return val;

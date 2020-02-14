@@ -49,7 +49,15 @@ public class BlockJuniperChest extends ModBlockContainer {
 	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing face, float hitX, float hitY, float hitZ) {
 		if (!player.isSneaking() || player.getHeldItem(hand).isEmpty()) {
 			if (!world.getBlockState(pos.up()).doesSideBlockChestOpening(world, pos.up(), EnumFacing.DOWN)) {
-				if (ItemJuniperKey.checkAccess(world, pos, player, true)) player.openGui(Bewitchment.instance, GuiHandler.ModGui.JUNIPER_CHEST.ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
+				boolean found = false;
+				for (ItemStack stack : Bewitchment.proxy.getEntireInventory(player)) {
+					if (ItemJuniperKey.canAccess(world, pos, world.provider.getDimension(), stack)) {
+						found = true;
+						break;
+					}
+				}
+				if (found) player.openGui(Bewitchment.instance, GuiHandler.ModGui.JUNIPER_CHEST.ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
+				else if (!world.isRemote) player.sendStatusMessage(new TextComponentTranslation("juniper_key.invalid"), true);
 			}
 			return true;
 		}
@@ -85,7 +93,7 @@ public class BlockJuniperChest extends ModBlockContainer {
 	
 	@Override
 	public float getPlayerRelativeBlockHardness(IBlockState state, EntityPlayer player, World world, BlockPos pos) {
-		if (ItemJuniperKey.checkAccess(world, pos, player, false)) return super.getPlayerRelativeBlockHardness(state, player, world, pos);
+		for (ItemStack stack : Bewitchment.proxy.getEntireInventory(player)) if (ItemJuniperKey.canAccess(world, pos, player.dimension, stack)) return super.getPlayerRelativeBlockHardness(state, player, world, pos);
 		return -1;
 	}
 	

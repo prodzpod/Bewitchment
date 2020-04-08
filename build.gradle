@@ -126,3 +126,10 @@ processResources {
 mixin {
     add sourceSets.main, "mixins.bewitchment.refmap.json"
 }
+
+sourceSets {
+    main {
+        output.resourcesDir = output.classesDir
+        refMap = "mixins.bewitchment.refmap.json"
+    }
+}

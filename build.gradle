@@ -18,6 +18,9 @@ apply plugin: 'net.minecraftforge.gradle.forge'
 apply plugin: 'com.wynprice.cursemaven'
 apply plugin: 'org.spongepowered.mixin'
 
+boolean isFat = hasProperty("isFat")
+String buildType = (isFat ? "FAT" : "THIN")
+
 version = "1.12.2-0.0.21.11"
 group = "com.bewitchment"
 archivesBaseName = "bewitchment"
@@ -68,10 +71,22 @@ dependencies {
     deobfCompile "net.ilexiconn:llibrary:1.7.9-1.12.2"
     compile "baubles:Baubles:1.12:1.5.2"
     compile "vazkii.patchouli:Patchouli:1.0-20.99"
-    shade('org.spongepowered:mixin:0.8') {
-        transitive = false
-    }
     implementation 'org.jetbrains:annotations:15.0'
+
+    if(isFat) {
+        embed('org.spongepowered:mixin:0.8-SNAPSHOT') {
+            ['gson','guava','commons-io'].each {
+                exclude module: it
+            }
+            exclude module: 'launchwrapper'
+        }
+    }else{
+        compile ('org.spongepowered:mixin:0.8-SNAPSHOT'){
+            ['gson','guava','commons-io'].each {
+                exclude module: it
+            }
+        }
+    }
 }
 
 jar {
@@ -110,11 +125,4 @@ processResources {
 
 mixin {
     add sourceSets.main, "mixins.bewitchment.refmap.json"
-}
-
-sourceSets {
-    main {
-        output.resourcesDir = output.classesDir
-        refMap = "mixins.bewitchment.refmap.json"
-    }
 }

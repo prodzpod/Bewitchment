@@ -1,5 +1,6 @@
 package com.bewitchment.common.block;
 
+import com.bewitchment.ModConfig;
 import com.bewitchment.client.misc.Statues;
 import com.bewitchment.common.block.tile.entity.TileEntityStatue;
 import com.bewitchment.common.block.util.ModBlock;
@@ -25,12 +26,15 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.Optional;
+import thaumcraft.api.crafting.IInfusionStabiliserExt;
 
 import javax.annotation.Nullable;
 import java.util.Random;
 
 @SuppressWarnings("deprecation")
-public class BlockStatue extends ModBlockContainer {
+@Optional.Interface(iface = "thaumcraft.api.crafting.IInfusionStabiliserExt", modid = "thaumcraft")
+public class BlockStatue extends ModBlockContainer implements IInfusionStabiliserExt {
 	public final Statues.Statue statue;
 
 	public BlockStatue(Statues.Statue statue) {
@@ -252,5 +256,16 @@ public class BlockStatue extends ModBlockContainer {
 		}
 	}
 
+	@Override
+	@Optional.Method(modid = "thaumcraft")
+	public float getStabilizationAmount(World world, BlockPos blockPos) {
+		return 2f;
+	}
+
+	@Override
+	@Optional.Method(modid = "thaumcraft")
+	public boolean canStabaliseInfusion(World world, BlockPos blockPos) {
+		return ModConfig.compat.enableMiscParaphernalia;
+	}
 
 }

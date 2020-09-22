@@ -441,6 +441,12 @@ public class ModConfig {
 		@Config.RequiresMcRestart
 		@Config.Comment("Enable world gen of dynamic Bewitchment trees instead of the regular trees")
 		public boolean genDynamic = true;
+
+		@Config.Comment("Enable Thaumcraft infusion stabilizing with candles")
+		public boolean enableCandleParaphernalia = true;
+
+		@Config.Comment("Enable Thaumcraft infusion stabilizing with other blocks (like statues)")
+		public boolean enableMiscParaphernalia = true;
 	}
 
 	@Mod.EventBusSubscriber(modid = Bewitchment.MODID)

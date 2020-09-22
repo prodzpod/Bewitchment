@@ -1,5 +1,6 @@
 package com.bewitchment.common.block;
 
+import com.bewitchment.ModConfig;
 import com.bewitchment.api.capability.extendedplayer.ExtendedPlayer;
 import com.bewitchment.api.registry.Curse;
 import com.bewitchment.client.misc.Statues;
@@ -11,13 +12,16 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.Optional;
+import thaumcraft.api.crafting.IInfusionStabiliserExt;
 
 import java.util.List;
 
 /**
  * Created by Joseph on 6/8/2020.
  */
-public class BlockGoddessStatue extends BlockStatue {
+@Optional.Interface(iface = "thaumcraft.api.crafting.IInfusionStabiliserExt", modid = "thaumcraft")
+public class BlockGoddessStatue extends BlockStatue implements IInfusionStabiliserExt {
 	private boolean cursed;
 
 	public BlockGoddessStatue(Statues.Statue statue) {
@@ -41,4 +45,15 @@ public class BlockGoddessStatue extends BlockStatue {
 		return super.onBlockActivated(worldIn, pos, state, playerIn, hand, facing, hitX, hitY, hitZ);
 	}
 
+	@Override
+	@Optional.Method(modid = "thaumcraft")
+	public float getStabilizationAmount(World world, BlockPos blockPos) {
+		return 3f;
+	}
+
+	@Override
+	@Optional.Method(modid = "thaumcraft")
+	public boolean canStabaliseInfusion(World world, BlockPos blockPos) {
+		return ModConfig.compat.enableMiscParaphernalia;
+	}
 }

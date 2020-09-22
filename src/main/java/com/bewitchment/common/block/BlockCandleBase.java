@@ -1,5 +1,6 @@
 package com.bewitchment.common.block;
 
+import com.bewitchment.ModConfig;
 import com.bewitchment.common.block.util.ModBlock;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.EnumPushReaction;
@@ -76,7 +77,7 @@ public abstract class BlockCandleBase extends ModBlock implements IInfusionStabi
 	@Override
 	@Optional.Method(modid = "thaumcraft")
 	public boolean canStabaliseInfusion(World world, BlockPos pos) {
-		return true;
+		return ModConfig.compat.enableCandleParaphernalia;
 	}
 
 	@Override
